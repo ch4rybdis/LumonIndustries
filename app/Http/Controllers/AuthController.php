@@ -109,8 +109,10 @@ public function viewDashboard(){
     }
 
     public function viewProfile(){
+
         $fullName = session('fullName');
         $n = session('n');
+
         $imageLink = session('imageLink');
         $pageName = 'Profile';
         $departmentId= session('department_id');
@@ -137,7 +139,11 @@ public function viewDashboard(){
 }
     public function changePassword(Request $request)
     {
+
+
+
         $request->validate([
+
             'currentPassword' => 'required',
             'newPassword' => 'required|min:4',
             'confirmPassword' => 'required|same:newPassword',
@@ -146,7 +152,7 @@ public function viewDashboard(){
         $employee_id= session('employee_id');
         $user = Employee::where('employee_id',$employee_id)->first();
 
-        // Mevcut şifre doğrulaması
+        // Mevcut şifre doğrulaması // if you don't log off after you change your password, you can't change it one more time, it gets old password to change it
         if ($request->currentPassword!=session('password')) {
             return redirect()->route('profile')->with('error', 'Mevcut şifre yanlış.');
         }

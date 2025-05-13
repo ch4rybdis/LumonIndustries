@@ -32,15 +32,35 @@ class InventoryController extends Controller
     public function updateStock($id, Request $request)
 {
     // $id parametresi, hangi ürünün stokunu güncellediğinizi belirtir
-    $newStock = $request->input('new_stock');
+    $newStock = intval($request->input('new_stock'));
 
-    // Burada stok güncelleme işlemini gerçekleştirin, örneğin:
+// Stok güncelleme işlemini gerçekleştirin, örneğin:
+$product = Product::where('product_id', $id)->first();
 
-    $product = Product::where('product_id', $id)->first();
+if ($product) {
+    // Eğer inventory modeli içinde stok bilgisi varsa ona erişelim
+    $currentStock = $product->inventory->stock; // Mevcut stok miktarını al
+    $newStock = $currentStock + $newStock; // Yeni stok miktarını hesapla
+    $product->inventory->update(['stock' => $newStock]); // Stok güncellemesini yap
+}
 
-    if ($product) {
-        $product->inventory->update(['stock' => $newStock]);
-    }
+    return redirect()->route('inventory')->with('success', 'Stock updated successfully');
+}
+
+public function deleteStock($id, Request $request)
+{
+    // $id parametresi, hangi ürünün stokunu güncellediğinizi belirtir
+    $newStock = intval($request->input('new_stock'));
+
+// Stok güncelleme işlemini gerçekleştirin, örneğin:
+$product = Product::where('product_id', $id)->first();
+
+if ($product) {
+    // Eğer inventory modeli içinde stok bilgisi varsa ona erişelim
+    $currentStock = $product->inventory->stock; // Mevcut stok miktarını al
+    $newStock = $currentStock - $newStock; // Yeni stok miktarını hesapla
+    $product->inventory->update(['stock' => $newStock]); // Stok güncellemesini yap
+}
 
     return redirect()->route('inventory')->with('success', 'Stock updated successfully');
 }

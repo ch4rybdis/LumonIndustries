@@ -41,6 +41,7 @@ Route::group(['middleware' => 'employee.data'], function () {
     Route::delete('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
     Route::post('/change-password', [AuthController::class, 'changePassword'])->name('changePassword');
     Route::post('/change-salary/{id}', [AuthController::class, 'changeSalary'])->name('changeSalary');
+    Route::put('/delete-Stock/{id}',[InventoryController::class,'deleteStock'])->name('deleteStock');
 
 });
 

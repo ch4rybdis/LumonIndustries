@@ -45,8 +45,21 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="input-group">
-                                        <input type="number" name="new_stock" class="form-control" placeholder="New Stock">
-                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <input type="number" name="new_stock" class="form-control"
+                                            placeholder="Üretilen Adet">
+                                        <button type="submit" class="btn btn-primary">Ekle</button>
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{{ route('deleteStock', ['id' => $inventory->product->product_id]) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="input-group">
+                                        <input type="number" name="new_stock" class="form-control"
+                                            placeholder="Satılan Adet">
+                                        <button type="submit" class="btn btn-danger">Satıldı</button>
                                     </div>
                                 </form>
                             </td>
